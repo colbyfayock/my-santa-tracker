@@ -31,7 +31,31 @@ const IndexPage = () => {
     } catch(e) {
       throw new Error(`Failed to find Santa!: ${e}`)
     }
-    console.log('routeJson', routeJson);
+
+    // Grab Santa's route destinations, determine which ones have presents, and figure out his last known
+    // location where he delivered a present
+
+    const { destinations } = routeJson;
+    const destinationsWithPresents = destinations.filter(({presentsDelivered}) => presentsDelivered > 0);
+    const lastKnownDestination = destinationsWithPresents[destinationsWithPresents.length - 1]
+
+    // Create a Leaflet LatLng instance using that location
+
+    const santaLocation = new L.LatLng( lastKnownDestination.location.lat, lastKnownDestination.location.lng );
+
+    // Create a Leaflet Market instance using Santa's LatLng location
+
+    const santaMarker = L.marker( santaLocation, {
+      icon: L.divIcon({
+        className: 'icon',
+        html: `<div class="icon-santa">🎅</div>`,
+        iconSize: 50
+      })
+    });
+
+    // Add Santa to the map!
+
+    santaMarker.addTo(leafletElement);
   }
 
   const mapSettings = {
