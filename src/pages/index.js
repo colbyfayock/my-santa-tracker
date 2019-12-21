@@ -29,7 +29,23 @@ const IndexPage = () => {
       route = await fetch(santaJson.route);
       routeJson = await route.json();
     } catch(e) {
-      throw new Error(`Failed to find Santa!: ${e}`)
+      console.log(`Failed to find Santa!: ${e}`);
+    }
+
+    if ( !routeJson ) {
+      // Create a Leaflet Market instance using Santa's LatLng location
+      const center = new L.LatLng( 0, 0 );
+      const noSanta = L.marker( center, {
+        icon: L.divIcon({
+          className: 'icon',
+          html: `<div class="icon-santa">🎅</div>`,
+          iconSize: 50
+        })
+      });
+      noSanta.addTo( leafletElement );
+      noSanta.bindPopup( `Santa's still at the North Pole!` );
+      noSanta.openPopup();
+      return;
     }
 
     // Grab Santa's route destinations, determine which ones have presents, and figure out his last known
