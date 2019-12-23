@@ -22,17 +22,22 @@ const IndexPage = () => {
 
   async function mapEffect({ leafletElement } = {}) {
     if ( !leafletElement ) return;
-    let santa, santaJson, route, routeJson;
+    let route, routeJson;
     try {
-      santa = await fetch('https://santa-api.appspot.com/info?client=web&language=en&fingerprint=&routeOffset=0&streamOffset=0');
-      santaJson = await santa.json();
-      route = await fetch(santaJson.route);
+      route = await fetch('https://firebasestorage.googleapis.com/v0/b/santa-tracker-firebase.appspot.com/o/route%2Fsanta_en.json?alt=media&2018b');
       routeJson = await route.json();
     } catch(e) {
       console.log(`Failed to find Santa!: ${e}`);
     }
 
-    if ( !routeJson ) {
+    // Grab Santa's route destinations, determine which ones have presents, and figure out his last known
+    // location where he delivered a present
+
+    const { destinations = [] } = routeJson || {};
+    const destinationsVisited = destinations.filter(({arrival}) => arrival < Date.now());
+    const destinationsWithPresents = destinationsVisited.filter(({presentsDelivered}) => presentsDelivered > 0);
+
+    if ( destinationsWithPresents.length === 0 ) {
       // Create a Leaflet Market instance using Santa's LatLng location
       const center = new L.LatLng( 0, 0 );
       const noSanta = L.marker( center, {
@@ -48,11 +53,6 @@ const IndexPage = () => {
       return;
     }
 
-    // Grab Santa's route destinations, determine which ones have presents, and figure out his last known
-    // location where he delivered a present
-
-    const { destinations } = routeJson;
-    const destinationsWithPresents = destinations.filter(({presentsDelivered}) => presentsDelivered > 0);
     const lastKnownDestination = destinationsWithPresents[destinationsWithPresents.length - 1]
 
     // Create a Leaflet LatLng instance using that location
