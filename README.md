@@ -1,15 +1,13 @@
-# Santa Tracker Map Demo
+# Santa Tracker with Gatsby & React Leaflet
 
-Learn how to create your own with [How to Create your own Santa Tracker with Gatsby and React Leaflet](https://www.freecodecamp.org/news/create-your-own-santa-tracker-with-gatsby-and-react-leaflet/)
+Demo for tutorial [Create your own Santa Tracker with Gatsby and React Leaflet](https://www.colbyfayock.com/posts/create-your-own-santa-tracker-with-gatsby-and-react-leaflet)
 
-## Getting started locally
-* `yarn install`
-* `yarn develop`
-* 🚀
-
-## Spin up your own mapping app!
-Check out [Gatsby Starter Leaflet](https://github.com/colbyfayock/gatsby-starter-leaflet)
+📝 Article: https://www.colbyfayock.com/posts/create-your-own-santa-tracker-with-gatsby-and-react-leaflet
 
 ## More tutorials and walkthroughs
-* [Follow me on Twitter](https://twitter.com/colbyfayock)
-* [Subscribe on YouTube](https://www.youtube.com/colbyfayock)
+
+🐦 [Follow me on Twitter](https://twitter.com/colbyfayock)
+
+📺 [Subscribe on YouTube](https://www.youtube.com/colbyfayock)
+
+✉️ [Sign Up for My Newsletter](https://colbyfayock.com/newsletter)
